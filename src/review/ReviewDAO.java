@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewDAO {
+
+	private static ReviewDAO instance = new ReviewDAO();
+
+	public static ReviewDAO getInstance() {
+		return instance;
+	}
+
 	public List<ReviewVO> selectReview() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "PROJECT", "java");
@@ -24,6 +31,7 @@ public class ReviewDAO {
 		builder.append("    RV_CONTENT");
 		builder.append(" FROM");
 		builder.append("    REVIEW");
+		builder.append(" ORDER BY RV_NUM");
 		ResultSet resultSet = statement.executeQuery(builder.toString());
 		List<ReviewVO> list = new ArrayList<>();
 		while (resultSet.next()) {
@@ -34,10 +42,10 @@ public class ReviewDAO {
 			String reviewTitle = resultSet.getString("RV_TITLE");
 			String reviewRating = resultSet.getString("RV_RATING");
 			String reviewContent = resultSet.getString("RV_CONTENT");
-			new ReviewVO(reviewNum, reviewDate, reviewTitle, reviewRating, reviewContent, customerId, reviewContent,
+			new ReviewVO(reviewNum, reviewDate, reviewTitle, reviewRating, reviewContent, customerId, reviewNum,
 					mvTitle);
 			list.add(new ReviewVO(reviewNum, reviewDate, reviewTitle, reviewRating, reviewContent, customerId,
-					reviewContent, mvTitle));
+					reviewNum, mvTitle));
 		}
 		resultSet.close();
 		statement.close();
@@ -94,8 +102,8 @@ public class ReviewDAO {
 		builder.append(" WHERE");
 		builder.append("    rv_num =?");
 		PreparedStatement statement = connection.prepareStatement(builder.toString());
-		statement.setInt(2, number);
 		statement.setString(1, content);
+		statement.setInt(2, number);
 		int executeUpdate = statement.executeUpdate();
 		statement.close();
 		connection.close();
