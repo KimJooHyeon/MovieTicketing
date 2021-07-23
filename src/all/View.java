@@ -25,7 +25,7 @@ public class View {
 
 		end: while (true) {
 			System.out.println();
-			System.out.println("안녕하세요. ▶ ⓙⓤⓨⓔⓞⓝ ◀ 영화관입니다.");
+			System.out.println("안녕하세요. zooxnuyh 영화관입니다.");
 			System.out.println("원하는 메뉴를 선택해 주세요.");
 			System.out.println();
 
