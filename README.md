@@ -1,3 +1,3 @@
 # MovieTicketing
 
-Beginner Project
+Beginner Project (only console)
